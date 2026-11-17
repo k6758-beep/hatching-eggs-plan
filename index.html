@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>搶票大作戰 × 五年養成蛋</title>
+<title>搶票大作戰 × 五年孵蛋計畫</title>
 <meta name="description" content="搶到門票，領一顆夢想蛋，花五年把它養成職人夥伴。正修科大五專 116 學年度升學小遊戲。">
 <meta name="theme-color" content="#131A3A">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -593,9 +593,9 @@ function boot() {
   go(0);
   if (old && old.step > 0) { const c = $("#resume"); if (c) { c.hidden = false; c.onclick = () => { S = Object.assign(base(), old); go(S.step); }; } }
 }
-/* ===== 遊戲一：搶票大作戰 × 五年養成蛋 =====
+/* ===== 遊戲一：搶票大作戰 × 五年孵蛋計畫 =====
  * 故事：正修有一座「夢想孵化館」。拿到門票進場的人，都能領一顆夢想蛋，花五年把它養成職人夥伴。
- * 前半段學會搶票（四個管道和時間），後半段養蛋（找出適合的科），最後回到售票口印出自己的票根。 */
+ * 前半段學會搶票（四個管道和時間），後半段孵蛋（找出適合的科），最後回到售票口印出自己的票根。 */
 const PET = { civ: "穩穩", arc: "畫畫", mec: "轉轉", ele: "電電", etn: "晶晶", cs: "碼碼" };
 const ROUNDS = [
   { yr: "專一｜15 歲", adv: () => ADV.free, q: "第一年，蛋想出去走走。帶它去哪裡？", item: "free",
@@ -669,9 +669,9 @@ const APP = {
   ],
   scenes: [
     { id: "title", bare: 1, run() {
-      stage(`<div class="card marquee"><p class="kicker">正修科技大學五專部｜${D.cycle}</p><h1>搶票大作戰</h1><p class="x2">× 五年養成蛋</p>
+      stage(`<div class="card marquee"><p class="kicker">正修科技大學五專部｜${D.cycle}</p><h1>搶票大作戰</h1><p class="x2">× 五年孵蛋</p>
         <p class="tagline">認識五專入學方法與個人興趣</p>
-        <p class="lead1">搶門票</p><p>走進「夢想孵化館」領一顆只屬於你的蛋。</p><p>花五年把蛋養大，看它變成哪一種職業夥伴！</p>
+        <p class="lead1">搶門票</p><p>走進「夢想孵化館」領一顆只屬於你的蛋。</p><p>花五年把蛋養大，看它變成哪一種職人夥伴！</p>
         <p class="small" style="color:#B9C0E6;margin-top:10px">給國中同學的升學小遊戲，大約 7 分鐘。</p></div>
         <div class="eggbox">${eggSVG(0, "wob")}</div>
         <button class="cta" id="go">開始！先辦會員卡</button><button class="cta ghost" id="resume" hidden>繼續上次的進度</button>`);
@@ -759,10 +759,10 @@ const APP = {
         <div class="eggbox">${eggSVG(0, "wob")}</div>
         <p>「${who()}，這顆蛋現在還不知道自己會變成什麼。」</p>
         <p>「接下來的<b>五年</b>，就像在五專讀書的五年。你帶它做什麼，它就會長成什麼。<b class="remind">${REMIND}</b>，沒有對錯。」</p>
-        <p class="small muted">每過一年，館內還會送你一份好消息。</p></div><button class="cta" id="ok">開始養蛋</button>`);
+        <p class="small muted">每過一年，館內還會送你一份好消息。</p></div><button class="cta" id="ok">開始孵蛋</button>`);
       $("#ok").onclick = () => { S.x.picks = []; S.x.r = 0; rescore(); next(); };
     } },
-    { id: "egg", lab: "五年養成蛋", run() {
+    { id: "egg", lab: "五年孵蛋", run() {
       S.x.picks = S.x.picks || []; let r = S.x.r || 0;
       const draw = () => {
         const R = ROUNDS[r]; S.x.picks.length = r; rescore(); const sel = new Set();
@@ -789,12 +789,35 @@ const APP = {
     { id: "hatch", lab: "孵化！", run() {
       rescore(); const top = topDept(); let taps = 0, pick = S.dept || top;
       const knock = () => {
-        stage(`<div class="card" style="text-align:center"><p class="kicker">五年到了</p><h2>蛋殼裡有聲音！敲三下，幫它出來</h2>
-          <div class="eggbox"><button id="egg" aria-label="敲蛋殼" style="padding:0">${eggSVG(4)}</button></div>
-          <p class="small muted" id="cnt">敲 ${taps}／3 下</p></div>`);
-        $("#egg").onclick = () => { taps++; beep([[300 + taps * 120, .1]]); const s = $("#egg svg"); s.classList.remove("shake"); void s.getBoundingClientRect(); s.classList.add("shake"); $("#cnt").textContent = `敲 ${taps}／3 下`; if (taps >= 3) setTimeout(() => { win(); confetti(); S.x.hatched = 1; save(); show(); }, 500); };
-      };
-      const show = () => {
+    stage(`<div class="card" style="text-align:center">
+  <p class="kicker">五年到了</p>
+  <h2>蛋殼裡有聲音！敲五下，幫它出來</h2>
+  <div class="eggbox">
+    <button id="egg" aria-label="敲蛋殼" style="padding:0">
+      ${eggSVG(4)}
+    </button>
+  </div>
+  <p class="small muted" id="cnt">敲 ${taps}／5 下</p>
+</div>`);
+
+$("#egg").onclick = () => {
+  taps++;
+  beep([[300 + taps * 120, .1]]);
+  const s = $("#egg svg");
+  s.classList.remove("shake");
+  void s.getBoundingClientRect();
+  s.classList.add("shake");
+
+  $("#cnt").textContent = `敲 ${taps}／5 下`;
+
+  if (taps >= 5) setTimeout(() => {
+    win();
+    confetti();
+    S.x.hatched = 1;
+    save();
+    show();
+  }, 500);
+};
         stage(`<div class="card"><p class="kicker">孵出來了！</p><h2>你的職人夥伴是「${PET[pick]}」，來自${DEPT[pick].name}</h2>
           <div class="eggbox">${petSVG(pick)}</div>
           <p class="small muted" style="text-align:center">${pick === top ? "這五年你最常選的，就是這一科的事。" : "這是你自己選的科。"}</p>
